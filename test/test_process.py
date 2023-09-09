@@ -4,8 +4,9 @@ from jsonschema import ValidationError
 from pytest import fixture, raises
 from ultralytics import YOLO
 
-from src.process import encode_as_b64, main
 from src import MODEL_PATH
+from src.process import encode_as_b64, main
+
 
 @fixture
 def image():
@@ -16,9 +17,11 @@ def image():
 def b64(image):
     return encode_as_b64(image)
 
+
 @fixture
 def model():
     return YOLO(MODEL_PATH)
+
 
 @fixture
 def data(b64, model):
