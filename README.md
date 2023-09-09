@@ -2,9 +2,9 @@
 
 [![tests](https://github.com/Vicente-G/Example-YOLO/actions/workflows/ci.yml/badge.svg?event=pull_request)](https://github.com/Vicente-G/Example-YOLO/actions/workflows/ci.yml)
 [![deploy](https://github.com/Vicente-G/Example-YOLO/actions/workflows/cd.yml/badge.svg?event=push)](https://github.com/Vicente-G/Example-YOLO/actions/workflows/cd.yml)
-[![license](https://img.shields.io/badge/license-MIT-purple.svg)](https://github.com/Vicente-G/Database-Model/blob/main/LICENSE)
+[![license](https://img.shields.io/badge/license-AGPL-purple.svg)](https://github.com/ultralytics/ultralytics/blob/main/LICENSE)
 
-This is an example of service written in `Python`, it provides a base from which make other services related to image processing using `OpenCV`. The implementation uses `gunicorn`, `Flask`
+This is an example of service written in `Python`, it provides a base from which make other services related to object detection using `YOLOv8` from `Ultralytics`. The implementation uses `gunicorn`, `Flask`
 
 ## Installation
 
@@ -58,14 +58,16 @@ The output should be something with the following shape: (key changes to error i
 
 ```json
 {
-    "image": "<a Base64 string encoding the processed image>"
+    "image": "<a Base64 string encoding the labelled image>",
+    "locs": "[A number array with the mid points of the boxes]",
+    "classes": "[A number array with the classes detected]"
 }
 ```
 
 Also, the following correspond to the equivalent action in axios:
 
 ```js
-const { image, error } = await axios.post(
+const { error, ...output } = await axios.post(
     'localhost:8080/process',
     { image: '<your Base64 string encoding an image>' },
     {
