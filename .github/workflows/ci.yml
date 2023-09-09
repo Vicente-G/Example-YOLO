@@ -7,6 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - uses: Jimver/cuda-toolkit@v0.2.11
     - uses: pdm-project/setup-pdm@v3
       with:
         python-version: 3.8
