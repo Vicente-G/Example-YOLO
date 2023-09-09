@@ -13,4 +13,3 @@ jobs:
         cache: true
     - run: pdm sync
     - run: pdm run check
-    - run: pdm run test

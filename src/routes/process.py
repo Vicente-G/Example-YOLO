@@ -1,16 +1,14 @@
-from flask import Request, Response
+from flask import Request, Response, jsonify
 from jsonschema import ValidationError
+from ultralytics import YOLO
 
 from src.process import main
 
 
-def response(req: Request) -> Response:
+def response(req: Request, model: YOLO) -> tuple[Response, int]:
     try:
-        body = main(req.get_json())
-        return Response(body, status=200, mimetype="application/json")
+        return jsonify(main(req.get_json(), model)), 200
     except (ValueError, ValidationError) as error:
-        body = {"error": str(error)}
-        return Response(body, status=400, mimetype="application/json")
+        return jsonify({"error": str(error)}), 400
     except KeyError as error:
-        body = {"error": str(error)}
-        return Response(body, status=500, mimetype="application/json")
+        return jsonify({"error": str(error)}), 500
